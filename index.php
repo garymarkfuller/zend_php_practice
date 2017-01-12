@@ -50,9 +50,34 @@ and open the template in the editor.
     
     echo '<p>Global: ' . $myvar . '</p>';
     
-    $scrape = file_get_contents('http://www.canterburycollege.ac.uk/about/corporation/corporate-members/', NULL, NULL, 0, 20000);
+    $scrape = file_get_contents('http://www.canterburycollege.ac.uk/about/corporation/corporate-members/', NULL, NULL, 0, 2000);
     echo strip_tags($scrape);
-    
+
+    $variabletoreference = 3;
+    $nonreference = $variabletoreference;
+    $reference = &$variabletoreference;
+    echo "<br />" . $nonreference;
+    echo "<br />" . $reference;
+    $variabletoreference = 4;
+    echo "<br />" . $nonreference;
+    echo "<br />" . $reference;
+    echo "<h3>Functions - Passing Variables by Reference</h3>";
+    function nonreference($variabletoreference) 
+    {
+        $variabletoreference ++;
+        return $variabletoreference;
+    }
+    echo "<br />" . nonreference($variabletoreference);
+    echo "<br />" . $variabletoreference;
+    function reference(&$vartoreference)
+    {
+        $vartoreference ++;
+        return $vartoreference;
+    }
+    $vartoreference = 0;
+    echo "<br />" . $vartoreference;
+    echo "<br />" . reference($vartoreference);
+    echo "<br />" . $vartoreference;
     ?>
   </body>
 </html>
