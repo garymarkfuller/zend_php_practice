@@ -52,7 +52,7 @@ and open the template in the editor.
     
     $scrape = file_get_contents('http://www.canterburycollege.ac.uk/about/corporation/corporate-members/', NULL, NULL, 0, 2000);
     echo strip_tags($scrape);
-
+    echo "<h3>Passing Variables by Reference</h3>";
     $variabletoreference = 3;
     $nonreference = $variabletoreference;
     $reference = &$variabletoreference;
@@ -77,7 +77,66 @@ and open the template in the editor.
     $vartoreference = 0;
     echo "<br />" . $vartoreference;
     echo "<br />" . reference($vartoreference);
-    echo "<br />" . $vartoreference;
+    echo "<br />" . $vartoreference . "<br />";
+    
+    // Using the + operator to add two arrays together. This works with var_dump, 
+    // print_r and with assignment to a third array (it may work in other scenarios)
+    $arrayone = array(0 => 1, 1 => 2, 2 => 3);
+    $arraytwo = array(1 => 3, "2" => 4, 3 => 5);
+    echo "<p>";
+    var_dump($arrayone + $arraytwo);
+    echo "</p><p>";
+    print_r($arrayone + $arraytwo);
+    $arraythree = $arrayone + $arraytwo;
+    echo "</p><p>";
+    print_r($arraythree);
+    echo "</p>";
+    
+    echo "<h3>Arrays - Using usort</h3><p>";
+    function myCmp ($left, $right)
+    {
+        echo $left . ", " . $right . "<br />";
+        //Sort according to the length of the value.        
+        $diff = strlen($left) - strlen($right);
+        //If the length is the same, sort normally.
+        if (!$diff) {
+            return strcmp($left, $right);
+        }
+        // The echo is not needed. Just for me to understand the process.
+        echo $diff . "<br />";
+        return $diff;
+    }
+    echo "</p>";
+    $usortarrayone = ['firstone', 'second1', 'third1', 'fourth'];
+    echo "<h5>Array</h5>";
+    usort($usortarrayone, 'myCmp');
+    print_r($usortarrayone);
+    $usortarraytwo = ['first1', '2nd', 'third', 'four'];
+    echo "<h5>Array</h5>";
+    usort($usortarraytwo, 'myCmp');
+    print_r($usortarraytwo);
+    echo "<h3>Adding to/removing from the end of an array</h3><p>";
+    $pushpop = [1,2,3];
+    print_r($pushpop);
+    echo "<br />";
+    array_push($pushpop, 4);
+    print_r($pushpop);
+    echo "<br />";
+    $pop = array_pop($pushpop);
+    echo $pop . "<br />";
+    print_r($pushpop);
+    echo "</p>";
+    echo "<h3>Adding to/removing from the start of an array</h3><p>";
+    $shiftunshift = [2,3,4];
+    print_r($shiftunshift);
+    echo "<br />";
+    array_unshift($shiftunshift, 1);
+    print_r($shiftunshift);
+    echo "<br />";
+    $unshift = array_shift($shiftunshift);
+    echo $unshift . "<br />";
+    print_r($shiftunshift);
+    echo "</p>";
     ?>
   </body>
 </html>
